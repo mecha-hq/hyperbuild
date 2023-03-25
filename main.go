@@ -1,36 +1,24 @@
 package main
 
 import (
-	"errors"
 	"fmt"
+	"os"
 
-	"github.com/natessilva/dag"
+	"github.com/omissis/hyperbuild/internal/config"
+	"github.com/omissis/hyperbuild/internal/model"
 )
 
 func main() {
-	var r dag.Runner
+	file := os.Args[1]
+	m, err := config.ParseYAMLFile(file)
+	if err != nil {
+		panic(err)
+	}
 
-	r.AddVertex("one", func() error {
-		fmt.Println("one and two will run in parallel before three")
-		return nil
-	})
-	r.AddVertex("two", func() error {
-		fmt.Println("one and two will run in parallel before three")
-		return nil
-	})
-	r.AddVertex("three", func() error {
-		fmt.Println("three will run before four")
-		return errors.New("three is broken")
-	})
-	r.AddVertex("four", func() error {
-		fmt.Println("four will never run")
-		return nil
-	})
+	res, err := model.Run(m)
+	if err != nil {
+		panic(err)
+	}
 
-	r.AddEdge("one", "three")
-	r.AddEdge("two", "three")
-
-	r.AddEdge("three", "four")
-
-	fmt.Printf("the runner terminated with: %v\n", r.Run())
+	fmt.Printf("done: %v", res)
 }

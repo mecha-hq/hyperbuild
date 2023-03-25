@@ -1,0 +1,17 @@
+steps:
+  - name: one
+    bash:
+      commands:
+        - echo "one runs first, surprise!" > out.txt
+  - name: two
+    bash:
+      commands:
+        - echo "xxxxxxxxxx!" > out2.txt
+  - name: docker
+    depends_on:
+      - one
+      - two
+    docker:
+      file: Dockerfile
+      tags:
+        - "test/hb:latest"
