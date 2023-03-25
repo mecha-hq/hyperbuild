@@ -1,0 +1,10 @@
+steps:
+  - name: one
+    commands:
+      - echo "broken!"
+      - "false"
+  - name: two
+    depends_on:
+      - one
+    commands:
+      - echo "second will never run!"

@@ -1,0 +1,17 @@
+plugins: 
+  - docker
+
+steps:
+  - name: debian bullseye
+    docker: 
+      file: debian/bullseye.Dockerfile
+      tags:
+        - debian:bullseye
+      build_args:
+        - DEBIAN_FRONTEND=noninteractive
+        - TZ=Europe/Berlin
+  - name: two
+    depends_on:
+      - one
+    commands:
+      - echo "second will never run!"
