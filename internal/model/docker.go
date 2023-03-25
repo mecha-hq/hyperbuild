@@ -1,5 +1,9 @@
 package model
 
+import (
+	"os/exec"
+)
+
 type Docker struct {
 	File      string
 	Tags      []string
@@ -7,5 +11,21 @@ type Docker struct {
 }
 
 func (d Docker) Run() ([]string, error) {
-	panic("not implemented")
+	args := []string{"build", "-f", d.File}
+	for _, tag := range d.Tags {
+		args = append(args, "--tag", tag)
+	}
+
+	for _, arg := range d.BuildArgs {
+		args = append(args, "--build-arg", arg)
+	}
+
+	args = append(args, ".")
+
+	out, err := exec.Command("docker", args...).Output()
+	if err != nil {
+		return nil, err
+	}
+
+	return []string{string(out)}, nil
 }
