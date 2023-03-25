@@ -1,14 +1,17 @@
 steps:
   - name: one
-    commands:
-      - echo "one runs first, surprise!"
+    bash:
+      commands:
+        - echo "one runs first, surprise!"
   - name: two
     depends_on:
       - one
-    commands:
-      - echo "two runs after one!"
+    bash:
+      commands:
+        - echo "two runs after one!"
   - name: three
     depends_on:
       - two
-    commands:
-      - echo "three"
+    bash:
+      commands:
+        - echo "three"

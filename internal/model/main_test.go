@@ -57,7 +57,6 @@ func Test_Run(t *testing.T) {
 					t.Errorf("line mismatched: expected %s, got %s", tC.want[i], line)
 				}
 			}
-
 		})
 	}
 }

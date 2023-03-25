@@ -11,14 +11,28 @@ type Manifest struct {
 	Steps []Step
 }
 
-type Step interface {
-	Name() string
-	DependsOn() []string
-	Run() ([]byte, error)
+type Step struct {
+	Name      string
+	DependsOn []string `yaml:"depends_on"`
+
+	Bash   *Bash
+	Docker *Docker
+}
+
+func (s Step) Run() ([]string, error) {
+	if s.Bash != nil {
+		return s.Bash.Run()
+	}
+
+	if s.Docker != nil {
+		return s.Docker.Run()
+	}
+
+	return nil, fmt.Errorf("no plugin found")
 }
 
 var (
-	ErrCommandFailed  = fmt.Errorf("command failed")
+	ErrStepFailed     = fmt.Errorf("step failed")
 	ErrGraphRunFailed = fmt.Errorf("graph run failed")
 )
 
@@ -30,24 +44,22 @@ func Run(m Manifest) ([]string, error) {
 	for _, step := range m.Steps {
 		step := step
 
-		r.AddVertex(step.Name(), func() error {
-
+		r.AddVertex(step.Name, func() error {
 			out, err := step.Run()
-			if err != nil {
-				return fmt.Errorf("%w: %q - %w", ErrCommandFailed, step.Name(), err)
-			}
 
 			mut.Lock()
-			outputs = append(outputs, string(out))
+			outputs = append(outputs, out...)
 			mut.Unlock()
 
-			r.Run()
+			if err != nil {
+				return fmt.Errorf("%w: %q - %w", ErrStepFailed, step.Name, err)
+			}
 
 			return nil
 		})
 
-		for _, don := range step.DependsOn() {
-			r.AddEdge(don, step.Name())
+		for _, don := range step.DependsOn {
+			r.AddEdge(don, step.Name)
 		}
 	}
 

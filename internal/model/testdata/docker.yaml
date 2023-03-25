@@ -1,17 +1,22 @@
-plugins: 
+plugins:
   - docker
 
 steps:
   - name: debian bullseye
-    docker: 
+    docker:
       file: debian/bullseye.Dockerfile
       tags:
         - debian:bullseye
       build_args:
         - DEBIAN_FRONTEND=noninteractive
-        - TZ=Europe/Berlin
-  - name: two
+        - TZ=Europe/Rome
+  - name: elixir 1.13.1
     depends_on:
-      - one
-    commands:
-      - echo "second will never run!"
+      - debian bullseye
+    docker:
+      file: elixir/1.13.1.Dockerfile
+      tags:
+        - omissis/elixir:1.13.1
+      build_args:
+        - DEBIAN_FRONTEND=noninteractive
+        - TZ=Europe/Rome
