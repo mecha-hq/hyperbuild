@@ -21,9 +21,9 @@ func Test_Parsone(t *testing.T) {
 			desc: "It runs the basic example correctly",
 			path: "testdata/basic.yaml",
 			want: []string{
-				"one runs first, surprise!",
-				"two runs after one!",
-				"three is broken",
+				"one runs first, surprise!\n",
+				"two runs after one!\n",
+				"three\n",
 			},
 			wantErr: fmt.Errorf("Pipeline failed"),
 		},

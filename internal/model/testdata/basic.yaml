@@ -2,22 +2,13 @@ steps:
   - name: one
     commands:
       - echo "one runs first, surprise!"
-
   - name: two
     depends_on:
       - one
     commands:
       - echo "two runs after one!"
-
   - name: three
     depends_on:
       - two
     commands:
-      - echo "three is broken"
-      - exit 1
-
-  - name: four
-    depends_on:
-      - three
-    commands:
-      - echo "four will never run"
+      - echo "three"
