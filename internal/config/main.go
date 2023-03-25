@@ -13,15 +13,16 @@ var (
 	ErrCannotParseConfigFile = fmt.Errorf("cannot parse config file")
 )
 
-func ParseYAMLFile(path string) ([]model.Step, error) {
+func ParseYAMLFile(path string) (model.Manifest, error) {
 	content, err := os.ReadFile(path)
+	var manifest model.Manifest
 	if err != nil {
-		return nil, fmt.Errorf("%w: %w", ErrCannotReadConfigFile, err)
+		return manifest, fmt.Errorf("%w: %w", ErrCannotReadConfigFile, err)
 	}
 
-	if err := yaml.Unmarshal([]byte(content), &model.Step{}); err != nil {
-		return nil, fmt.Errorf("%w: %w", ErrCannotParseConfigFile, err)
+	if err := yaml.Unmarshal([]byte(content), &manifest); err != nil {
+		return manifest, fmt.Errorf("%w: %w", ErrCannotParseConfigFile, err)
 	}
 
-	return nil, nil
+	return manifest, nil
 }
