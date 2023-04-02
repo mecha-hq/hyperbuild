@@ -1,4 +1,4 @@
-# 4. Setup main project libraries
+# 4. Dependency alert tool
 
 Date: 2023-04-02
 
