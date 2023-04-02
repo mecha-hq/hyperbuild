@@ -1,0 +1,33 @@
+project_name: hyperbuild
+
+release:
+  prerelease: auto
+  name_template: "Hyberbuild Version {{.Version}}"
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - <<: &build_defaults
+      binary: bin
+      main: .
+      env:
+        - CGO_ENABLED=0
+    id: linux
+    goos: [linux]
+    goarch: [amd64, arm64]
+  
+  - <<: *build_defaults
+    id: macos
+    goos: [darwin]
+    goarch: [amd64, arm64]
+
+archives:
+  - id: nix
+    builds: [linux, macos]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    wrap_in_directory: true
+    format: tar.gz
+
+
