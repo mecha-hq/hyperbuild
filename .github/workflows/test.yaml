@@ -9,25 +9,27 @@ on:
 jobs:
   golangci:
     name: lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.29
+          version: v1.52.1
           only-new-issues: false
           args: --timeout 5m --config .rules/.golangci.yml
   test:
     name: test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Go 1.15
+      - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.20
-      - name: Tools
-        run: make tools-go
-      - name: Test
-        run: make test-all
+          go-version: '1.20'
+      - run: make tools-go
+      - run: make test-all
