@@ -1,4 +1,4 @@
-# 4. Dependency alert tool
+# 7. Dependency alert tool
 
 Date: 2023-04-02
 
