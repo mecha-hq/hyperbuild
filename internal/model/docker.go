@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"os/exec"
 )
 
@@ -22,7 +21,6 @@ func (d Docker) Run() ([]string, error) {
 	}
 
 	args = append(args, ".")
-	fmt.Println(args)
 
 	out, err := exec.Command("docker", args...).Output()
 	if err != nil {
