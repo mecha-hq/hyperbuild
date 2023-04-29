@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/omissis/hyperbuild/internal/app"
+	"github.com/mecha-ci/hyperbuild/internal/app"
 	"github.com/spf13/cobra"
 )
 

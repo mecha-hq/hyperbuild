@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/omissis/hyperbuild/internal/app"
-	"github.com/omissis/hyperbuild/internal/cmd"
+	"github.com/mecha-ci/hyperbuild/internal/app"
+	"github.com/mecha-ci/hyperbuild/internal/cmd"
 )
 
 var (

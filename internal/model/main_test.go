@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/omissis/hyperbuild/internal/config"
-	"github.com/omissis/hyperbuild/internal/model"
+	"github.com/mecha-ci/hyperbuild/internal/config"
+	"github.com/mecha-ci/hyperbuild/internal/model"
 )
 
 func Test_BashRun(t *testing.T) {

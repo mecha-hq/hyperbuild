@@ -5,8 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/omissis/hyperbuild/internal/app"
-	cobrax "github.com/omissis/hyperbuild/internal/x/cobra"
+	"github.com/mecha-ci/hyperbuild/internal/app"
+	cobrax "github.com/mecha-ci/hyperbuild/internal/x/cobra"
 )
 
 type RootCommand struct {
