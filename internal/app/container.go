@@ -16,8 +16,7 @@ type Parameters struct {
 	Versions Versions
 }
 
-type services struct {
-}
+type services struct{}
 
 func NewContainer(versions Versions) *Container {
 	ctr := Container{
