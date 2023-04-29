@@ -1,24 +1,30 @@
 package main
 
 import (
-	"fmt"
-	"os"
+	"log"
 
-	"github.com/omissis/hyperbuild/internal/config"
-	"github.com/omissis/hyperbuild/internal/model"
+	"github.com/omissis/hyperbuild/internal/app"
+	"github.com/omissis/hyperbuild/internal/cmd"
+)
+
+var (
+	version   = "unknown"
+	gitCommit = "unknown"
+	buildTime = "unknown"
+	goVersion = "unknown"
+	osArch    = "unknown"
 )
 
 func main() {
-	file := os.Args[1]
-	m, err := config.ParseYAMLFile(file)
-	if err != nil {
-		panic(err)
-	}
+	ctr := app.NewContainer(app.Versions{
+		BuildTime: buildTime,
+		GitCommit: gitCommit,
+		GoVersion: goVersion,
+		OsArch:    osArch,
+		Version:   version,
+	})
 
-	res, err := model.Run(m)
-	if err != nil {
-		panic(err)
+	if err := cmd.NewRootCommand(ctr).Execute(); err != nil {
+		log.Fatal(err)
 	}
-
-	fmt.Printf("done: %v", res)
 }
