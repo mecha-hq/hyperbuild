@@ -1,4 +1,3 @@
 FROM scratch
 
-RUN mkdir /app
-WORKDIR /app
+COPY docker.go .
