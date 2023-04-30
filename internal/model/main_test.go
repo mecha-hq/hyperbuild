@@ -39,26 +39,26 @@ func Test_BashRun(t *testing.T) {
 			wantErr: true,
 		},
 	}
-	for _, tC := range testCases {
-		tC := tC
+	for _, testCase := range testCases {
+		testCase := testCase
 
-		t.Run(tC.desc, func(t *testing.T) {
+		t.Run(testCase.desc, func(t *testing.T) {
 			t.Parallel()
-			m, err := config.ParseYAMLFile(tC.path)
+			m, err := config.ParseYAMLFile(testCase.path)
 			if err != nil {
 				t.Fatalf("manifest parsing failed: %v", err)
 			}
 			got, err := model.Run(m)
-			if (err != nil) != tC.wantErr {
-				t.Errorf("error mismatched: expected %v, got %v", tC.wantErr, err)
+			if (err != nil) != testCase.wantErr {
+				t.Errorf("error mismatched: expected %v, got %v", testCase.wantErr, err)
 			}
-			if len(got) != len(tC.want) {
-				t.Errorf("len mismatched: expected %d, got %d", len(tC.want), len(got))
+			if len(got) != len(testCase.want) {
+				t.Errorf("len mismatched: expected %d, got %d", len(testCase.want), len(got))
 			}
 
 			for i, line := range got {
-				if tC.want[i] != line {
-					t.Errorf("line mismatched: expected %s, got %s", tC.want[i], line)
+				if testCase.want[i] != line {
+					t.Errorf("line mismatched: expected %s, got %s", testCase.want[i], line)
 				}
 			}
 		})
@@ -93,15 +93,15 @@ func Test_DockerRun(t *testing.T) {
 			wantErr:  false,
 		},
 	}
-	for _, tC := range testCases {
-		tC := tC
+	for _, testCase := range testCases {
+		testCase := testCase
 
-		t.Run(tC.desc, func(t *testing.T) {
+		t.Run(testCase.desc, func(t *testing.T) {
 			t.Parallel()
 
-			_, err := model.Run(tC.manifest)
-			if (err != nil) != tC.wantErr {
-				t.Errorf("error mismatched: expected %v, got %v", tC.wantErr, err)
+			_, err := model.Run(testCase.manifest)
+			if (err != nil) != testCase.wantErr {
+				t.Errorf("error mismatched: expected %v, got %v", testCase.wantErr, err)
 			}
 
 			out, err := exec.Command("docker", "images", image, "-q").Output()

@@ -7,6 +7,8 @@ import (
 )
 
 func TestInitEnvs(t *testing.T) {
+	t.Parallel()
+
 	v := cobra.InitEnvs("test")
 
 	if v == nil {

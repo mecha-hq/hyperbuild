@@ -10,34 +10,34 @@ import (
 )
 
 func InitEnvs(envPrefix string) *viper.Viper {
-	v := viper.New()
+	runtimeViper := viper.New()
 
-	v.SetEnvPrefix(envPrefix)
+	runtimeViper.SetEnvPrefix(envPrefix)
 
-	v.AutomaticEnv()
+	runtimeViper.AutomaticEnv()
 
-	return v
+	return runtimeViper
 }
 
 func BindFlags(cmd *cobra.Command, v *viper.Viper, logger func(v ...any), envPrefix string) {
-	cmd.Flags().VisitAll(func(f *pflag.Flag) {
-		if strings.Contains(f.Name, "-") {
-			envSuffix := strings.ToUpper(strings.ReplaceAll(f.Name, "-", "_"))
+	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
+		if strings.Contains(flag.Name, "-") {
+			envSuffix := strings.ToUpper(strings.ReplaceAll(flag.Name, "-", "_"))
 
 			env := envSuffix
 			if envPrefix != "" {
 				env = fmt.Sprintf("%s_%s", envPrefix, envSuffix)
 			}
 
-			if err := v.BindEnv(f.Name, env); err != nil {
+			if err := v.BindEnv(flag.Name, env); err != nil {
 				logger(err)
 			}
 		}
 
-		if !f.Changed && v.IsSet(f.Name) {
-			val := v.Get(f.Name)
+		if !flag.Changed && v.IsSet(flag.Name) {
+			val := v.Get(flag.Name)
 
-			if err := cmd.Flags().Set(f.Name, fmt.Sprintf("%v", val)); err != nil {
+			if err := cmd.Flags().Set(flag.Name, fmt.Sprintf("%v", val)); err != nil {
 				logger(err)
 			}
 		}
