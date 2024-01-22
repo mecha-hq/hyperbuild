@@ -3,8 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/omissis/hyperbuild/internal/app"
 	"github.com/spf13/cobra"
+
+	"github.com/mecha-ci/hyperbuild/internal/app"
 )
 
 func NewVersionCommand(ctr *app.Container) *cobra.Command {

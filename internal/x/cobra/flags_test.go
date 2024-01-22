@@ -3,10 +3,12 @@ package cobra_test
 import (
 	"testing"
 
-	"github.com/omissis/hyperbuild/internal/x/cobra"
+	"github.com/mecha-ci/hyperbuild/internal/x/cobra"
 )
 
 func TestInitEnvs(t *testing.T) {
+	t.Parallel()
+
 	v := cobra.InitEnvs("test")
 
 	if v == nil {

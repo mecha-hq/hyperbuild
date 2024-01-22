@@ -6,7 +6,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/omissis/hyperbuild/internal/model"
+	"github.com/mecha-ci/hyperbuild/internal/model"
 )
 
 var (

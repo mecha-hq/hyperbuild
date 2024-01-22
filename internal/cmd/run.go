@@ -3,10 +3,11 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/omissis/hyperbuild/internal/app"
-	"github.com/omissis/hyperbuild/internal/config"
-	"github.com/omissis/hyperbuild/internal/model"
 	"github.com/spf13/cobra"
+
+	"github.com/mecha-ci/hyperbuild/internal/app"
+	"github.com/mecha-ci/hyperbuild/internal/config"
+	"github.com/mecha-ci/hyperbuild/internal/model"
 )
 
 var (

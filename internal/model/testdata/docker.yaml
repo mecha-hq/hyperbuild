@@ -16,7 +16,7 @@ steps:
     docker:
       file: elixir/1.13.1.Dockerfile
       tags:
-        - omissis/elixir:1.13.1
+        - mecha-ci/elixir:1.13.1
       build_args:
         - DEBIAN_FRONTEND=noninteractive
         - TZ=Europe/Rome
